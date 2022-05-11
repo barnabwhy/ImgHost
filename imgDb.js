@@ -4,7 +4,7 @@ var crypto = require("crypto");
 const { getAccount } = require('./accounts');
 
 function imgExists(imgName) {
-    let id = (imgName.split('.')[0] || '').toLowerCase();
+    let id = (imgName.split('.')[0] || '');
     let ext = (imgName.split('.')[1] || '').toLowerCase();
     console.log(__dirname+'/images/'+id+'.'+ext + " : " + fs.existsSync(__dirname+'/images/'+id+'.'+ext))
     console.log(__dirname+'/img_data/'+id+'_'+ext+'.json' + " : " + fs.existsSync(__dirname+'/img_data/'+id+'_'+ext+'.json'))
@@ -12,7 +12,7 @@ function imgExists(imgName) {
     return false
 }
 function getImg(imgName) {
-    let id = (imgName.split('.')[0] || '').toLowerCase();
+    let id = (imgName.split('.')[0] || '');
     let ext = (imgName.split('.')[1] || '').toLowerCase();
     if(imgExists(imgName))
         return fs.createReadStream('./images/'+id+'.'+ext);
@@ -20,7 +20,7 @@ function getImg(imgName) {
         return null
 }
 function getImgAuthor(imgName) {
-    let id = (imgName.split('.')[0] || '').toLowerCase();
+    let id = (imgName.split('.')[0] || '');
     let ext = (imgName.split('.')[1] || '').toLowerCase();
     if(imgExists(imgName))
         return require('./img_data/'+id+'_'+ext+'.json').owner
@@ -28,7 +28,7 @@ function getImgAuthor(imgName) {
         return null
 }
 function getImgKey(imgName) {
-    let id = (imgName.split('.')[0] || '').toLowerCase();
+    let id = (imgName.split('.')[0] || '');
     let ext = (imgName.split('.')[1] || '').toLowerCase();
     if(imgExists(imgName))
         return require('./img_data/'+id+'_'+ext+'.json').key
@@ -36,7 +36,7 @@ function getImgKey(imgName) {
         return null
 }
 function getImgTimestamp(imgName) {
-    let id = (imgName.split('.')[0] || '').toLowerCase();
+    let id = (imgName.split('.')[0] || '');
     let ext = (imgName.split('.')[1] || '').toLowerCase();
     if(imgExists(imgName))
         return require('./img_data/'+id+'_'+ext+'.json').timestamp
