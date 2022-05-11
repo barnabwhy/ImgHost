@@ -50,10 +50,11 @@ function createImage(req) {
     }
 
     var id = crypto.randomBytes(6).toString('base64url');
-    while(imgExists(id+'.'+req.file.mimetype.split('/')[1])) {
+    let ext = fileTypes[req.file.mimetype] || req.file.mimetype.split('/')[1]
+    
+    while(imgExists(id+'.'+ext)) {
         id = crypto.randomBytes(6).toString('base64url');
     }
-    let ext = fileTypes[req.file.mimetype] || req.file.mimetype.split('/')[1]
 
     let imgPath = path.resolve(__dirname, 'images', id+'.'+ext)
     fs.writeFileSync(imgPath, req.file.buffer);

@@ -51,7 +51,7 @@ app.post('/api/upload', async (req, res) => {
             return res.sendStatus(500)
         }
         
-        if(req.file == undefined || fileTypes.indexOf(req.file.mimetype) == -1) {
+        if(req.file == undefined || Object.keys(fileTypes).indexOf(req.file.mimetype) == -1) {
             return res.sendStatus(400)
         }
         let filename = createImage(req);
