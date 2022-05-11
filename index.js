@@ -12,6 +12,13 @@ const httpServer = require('http').createServer(app);
 const { imgExists, getImg, getImgAuthor, getImgTimestamp, createImage, getImgKey } = require('./imgDb.js');
 const { accountExists, getAccountCount } = require('./accounts.js')
 
+if(!fs.existsSync('./images/')) {
+    fs.mkdirSync('./images/')
+}
+if(!fs.existsSync('./img_data/')) {
+    fs.mkdirSync('./img_data/')
+}
+
 const upload = multer({
     limits: {
         files: 1,
