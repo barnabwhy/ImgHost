@@ -56,7 +56,7 @@ function createImage(req) {
         id = crypto.randomBytes(6).toString('base64url');
     }
 
-    let imgPath = path.join(__dirname, 'images', id+'.'+req.file.mimetype.split('/')[1])
+    let imgPath = path.resolve(__dirname, 'images', id+'.'+req.file.mimetype.split('/')[1])
     fs.writeFileSync(imgPath, req.file.buffer);
 
     let imgJSON = {
@@ -64,7 +64,7 @@ function createImage(req) {
         key: req.body["api_key"],
         timestamp: new Date().toISOString()
     }
-    let jsonPath = path.join(__dirname, 'img_data', id+'_'+req.file.mimetype.split('/')[1]+'.json')
+    let jsonPath = path.resolve(__dirname, 'img_data', id+'_'+req.file.mimetype.split('/')[1]+'.json')
     fs.writeFileSync(jsonPath, JSON.stringify(imgJSON));
 
     return id+'.'+req.file.mimetype.split('/')[1];

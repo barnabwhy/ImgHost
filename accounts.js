@@ -1,7 +1,7 @@
 const path = require("path")
 const fs = require("fs")
 
-let accountsPath = path.join( __dirname, "accounts.json" )
+let accountsPath = path.resolve( __dirname, "accounts.json" )
 
 let accounts = {}
 if ( fs.existsSync( accountsPath ) )

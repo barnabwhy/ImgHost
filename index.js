@@ -68,8 +68,8 @@ app.delete('/api/delete/:filename', upload.none(), async (req, res) => {
         let id = (imgName.split('.')[0] || '').toLowerCase();
         let ext = (imgName.split('.')[1] || '').toLowerCase();
 
-        let imgPath = path.join(__dirname, 'images', id+'.'+ext)
-        let jsonPath = path.join(__dirname, 'img_data', id+'_'+ext+'.json')
+        let imgPath = path.resolve(__dirname, 'images', id+'.'+ext)
+        let jsonPath = path.resolve(__dirname, 'img_data', id+'_'+ext+'.json')
         fs.unlinkSync(imgPath)
         fs.unlinkSync(jsonPath)
         res.sendStatus(200)
@@ -86,8 +86,8 @@ app.delete('/api/nuke', upload.none(), async (req, res) => {
         let id = file.split('.')[0];
         let ext = file.split('.')[1];
 
-        let imgPath = path.join(__dirname, 'images', id+'.'+ext)
-        let jsonPath = path.join(__dirname, 'img_data', id+'_'+ext+'.json')
+        let imgPath = path.resolve(__dirname, 'images', id+'.'+ext)
+        let jsonPath = path.resolve(__dirname, 'img_data', id+'_'+ext+'.json')
 
         let imgJSON = require(jsonPath);
         if(imgJSON.key == req.body["api_key"]) {
