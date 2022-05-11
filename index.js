@@ -7,6 +7,35 @@ require('dotenv').config()
 const app = express();
 const port = process.env.HTTP_PORT;
 
+const rateLimit = require('express-rate-limit')
+
+const apiLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000,
+	max: 100,
+	standardHeaders: true,
+	legacyHeaders: false,
+})
+
+app.use('/api', apiLimiter)
+
+const imgLimiter = rateLimit({
+	windowMs: 5 * 60 * 1000,
+	max: 100,
+	standardHeaders: true,
+	legacyHeaders: false,
+})
+
+app.use(/\/((?!api).)*/, imgLimiter)
+
+let trustProxy = process.env.TRUST_PROXY == "true"
+if( trustProxy && process.env.TRUST_PROXY_LIST_PATH )
+{
+	let addressList = fs.readFileSync( process.env.TRUST_PROXY_LIST_PATH ).toString()
+	trustProxy = addressList.split( "\n" ).map( a => a.trim() ).filter( a => !a.startsWith( "#" ) && a != "" )
+}
+
+app.set('trust proxy', trustProxy)
+
 const httpServer = require('http').createServer(app);
 
 const { imgExists, getImg, getImgAuthor, getImgTimestamp, createImage, getImgKey, fileTypes } = require('./imgDb.js');
