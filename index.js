@@ -2,9 +2,10 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const multer  = require('multer')
+require('dotenv').config()
 
 const app = express();
-const port = 80;
+const port = process.env.HTTP_PORT;
 
 const httpServer = require('http').createServer(app);
 

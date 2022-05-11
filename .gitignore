@@ -130,3 +130,4 @@ dist
 images
 img_data
 accounts.json
+.env
