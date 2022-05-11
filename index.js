@@ -9,7 +9,7 @@ const port = process.env.HTTP_PORT;
 
 const httpServer = require('http').createServer(app);
 
-const { imgExists, getImg, getImgAuthor, getImgTimestamp, createImage, getImgKey } = require('./imgDb.js');
+const { imgExists, getImg, getImgAuthor, getImgTimestamp, createImage, getImgKey, fileTypes } = require('./imgDb.js');
 const { accountExists, getAccountCount } = require('./accounts.js')
 
 if(!fs.existsSync('./images/')) {
@@ -51,7 +51,7 @@ app.post('/api/upload', async (req, res) => {
             return res.sendStatus(500)
         }
         
-        if(req.file == undefined || !req.file.mimetype.startsWith("image/")) {
+        if(req.file == undefined || fileTypes.indexOf(req.file.mimetype) == -1) {
             return res.sendStatus(400)
         }
         let filename = createImage(req);

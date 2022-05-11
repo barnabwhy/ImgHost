@@ -6,8 +6,6 @@ const { getAccount } = require('./accounts');
 function imgExists(imgName) {
     let id = (imgName.split('.')[0] || '');
     let ext = (imgName.split('.')[1] || '').toLowerCase();
-    console.log(__dirname+'/images/'+id+'.'+ext + " : " + fs.existsSync(__dirname+'/images/'+id+'.'+ext))
-    console.log(__dirname+'/img_data/'+id+'_'+ext+'.json' + " : " + fs.existsSync(__dirname+'/img_data/'+id+'_'+ext+'.json'))
     if(fs.existsSync(__dirname+'/images/'+id+'.'+ext) && fs.existsSync(__dirname+'/img_data/'+id+'_'+ext+'.json')) return true
     return false
 }
@@ -55,8 +53,9 @@ function createImage(req) {
     while(imgExists(id+'.'+req.file.mimetype.split('/')[1])) {
         id = crypto.randomBytes(6).toString('base64url');
     }
+    let ext = fileTypes[req.file.mimetype] || req.file.mimetype.split('/')[1]
 
-    let imgPath = path.resolve(__dirname, 'images', id+'.'+req.file.mimetype.split('/')[1])
+    let imgPath = path.resolve(__dirname, 'images', id+'.'+ext)
     fs.writeFileSync(imgPath, req.file.buffer);
 
     let imgJSON = {
@@ -64,10 +63,22 @@ function createImage(req) {
         key: req.body["api_key"],
         timestamp: new Date().toISOString()
     }
-    let jsonPath = path.resolve(__dirname, 'img_data', id+'_'+req.file.mimetype.split('/')[1]+'.json')
+    let jsonPath = path.resolve(__dirname, 'img_data', id+'_'+ext+'.json')
     fs.writeFileSync(jsonPath, JSON.stringify(imgJSON));
 
-    return id+'.'+req.file.mimetype.split('/')[1];
+    return id+'.'+ext;
+}
+
+const fileTypes = {
+    'image/png': 'png',
+    'image/jpeg': 'jpg',
+    'image/gif': 'gif',
+    'image/webp': 'webp',
+    'video/mp4': 'mp4',
+    'video/webm': 'webm',
+    'video/quicktime': 'mov',
+    'audio/wav': 'wav',
+    'audio/mpeg': 'mp3'
 }
 
 module.exports = {
@@ -76,5 +87,6 @@ module.exports = {
     getImgAuthor,
     getImgKey,
     getImgTimestamp,
-    createImage
+    createImage,
+    fileTypes
 }
