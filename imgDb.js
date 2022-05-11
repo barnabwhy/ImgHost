@@ -6,6 +6,8 @@ const { getAccount } = require('./accounts');
 function imgExists(imgName) {
     let id = (imgName.split('.')[0] || '').toLowerCase();
     let ext = (imgName.split('.')[1] || '').toLowerCase();
+    console.log(__dirname+'/images/'+id+'.'+ext)
+    console.log(__dirname+'/img_data/'+id+'_'+ext+'.json')
     if(fs.existsSync(__dirname+'/images/'+id+'.'+ext) && fs.existsSync(__dirname+'/img_data/'+id+'_'+ext+'.json')) return true
     return false
 }
