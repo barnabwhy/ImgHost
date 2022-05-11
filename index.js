@@ -114,3 +114,7 @@ app.get('/*', async (req, res) => {
 httpServer.listen(port, () => {
   console.log(`ImgHost listening on port ${port}`);
 })
+
+process.on('uncaughtException', err => {
+    console.error(err);
+})
