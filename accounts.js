@@ -29,6 +29,6 @@ module.exports = {
         return accounts[key]
     },
     getAccountCount: function getAccountCount() {
-        return Object.values(accounts).reduce( (prev, curr) => curr.hidden ? prev : prev+1, 0 )
+        return Object.values(accounts).length
     }
 }

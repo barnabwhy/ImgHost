@@ -69,6 +69,26 @@ app.delete('/api/delete/:filename', upload.none(), async (req, res) => {
         res.sendStatus(404)
     }
 })
+app.delete('/api/nuke', upload.none(), async (req, res) => {
+    if(!req.body || !accountExists(req.body["api_key"]))
+        return res.sendStatus(401);
+    
+    let files = fs.readdirSync('./images');
+    for (let file of files) {
+        let id = file.split('.')[0];
+        let ext = file.split('.')[1];
+
+        let imgPath = path.join(__dirname, 'images', id+'.'+ext)
+        let jsonPath = path.join(__dirname, 'img_data', id+'_'+ext+'.json')
+
+        let imgJSON = require(jsonPath);
+        if(imgJSON.key == req.body["api_key"]) {
+            fs.unlinkSync(imgPath)
+            fs.unlinkSync(jsonPath)
+        }
+    }
+    res.sendStatus(200)
+})
 
 app.get('/*', async (req, res) => {
     let imgName = req.path.split('/')[1];
