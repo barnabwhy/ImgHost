@@ -104,5 +104,5 @@ app.get('/*', async (req, res) => {
 })
 
 httpServer.listen(port, () => {
-  console.log(`ShortImgHost listening on port ${port}`);
+  console.log(`ImgHost listening on port ${port}`);
 })
