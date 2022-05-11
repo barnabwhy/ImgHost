@@ -59,6 +59,9 @@ const upload = multer({
 app.get('/', (req, res) => {
     res.sendFile(__dirname+'/index.html');
 })
+app.get('/upload', (req, res) => {
+    res.sendFile(__dirname+'/upload.html');
+})
 app.get('/api/report', async (req, res) => {
     res.send("Report function being constructed")
 })
@@ -72,7 +75,7 @@ app.get('/api/stats', async (req, res) => {
     res.json(json)
 })
 app.post('/api/upload', async (req, res) => {
-    upload.single('image')(req, res, function (err) {
+    upload.single('file')(req, res, function (err) {
         if(!req.body || !accountExists(req.body["api_key"]))
             return res.sendStatus(401)
 
@@ -85,7 +88,7 @@ app.post('/api/upload', async (req, res) => {
         }
         let filename = createImage(req);
 
-        res.send((process.env.ALWAYS_USE_HTTPS == "true" ? "https" : req.protocol)+'://'+req.hostname+'/'+filename)
+        res.redirect((process.env.ALWAYS_USE_HTTPS == "true" ? "https" : req.protocol)+'://'+req.hostname+'/'+filename)
     })
 })
 app.delete('/api/delete/:filename', upload.none(), async (req, res) => {

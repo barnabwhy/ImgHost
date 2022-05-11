@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #171717;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 48px;
+        }
+
+        input[type=text] {
+            border-radius: 0;
+            border: none;
+            outline: none;
+            background-color: #050505;
+            padding: 12px;
+            color: white;
+            width: 320px;
+            font-weight: bold;
+            font-size: 16px;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: left;
+        }
+
+        input[type=file] {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+        label[for=file] {
+            border-radius: 0;
+            border: none;
+            outline: none;
+            background-color: #050505;
+            padding: 12px;
+            color: white;
+            width: 320px;
+            display: inline-block;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: left;
+        }
+
+        label[for=file]>span {
+            vertical-align: middle;
+            font-size: 12px;
+            text-align: right;
+            float: right;
+            margin-right: 4px;
+            color: #cccccc;
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        input[type=submit] {
+            border-radius: 0;
+            border: none;
+            outline: none;
+            background-color: #050505;
+            padding: 12px;
+            color: white;
+            width: 160px;
+            font-weight: bold;
+            font-size: 16px;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        input:hover,
+        label[for=file]:hover {
+            background: #111111;
+        }
+
+        input:active,
+        label[for=file]:active {
+            background: #222222;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="title">upload</h1>
+    <form action="api/upload" method="post" enctype="multipart/form-data">
+        <input type="text" name="api_key" id="api_key" placeholder="API Key" />
+        <br><br>
+        <label for="file">Choose File <span></span></label>
+        <input type="file" name="file" id="file" accept="image/*, video/*, audio/*" />
+        <br><br>
+        <input type="submit" name="submit" value="Submit" />
+    </form>
+
+    <script>
+        document.querySelector("#file").addEventListener("change", e => {
+            document.querySelector("label[for=file] > span").innerText = document.querySelector("#file").files[0].name
+        })
+    </script>
+</body>
+
+</html>
