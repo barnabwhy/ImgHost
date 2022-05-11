@@ -56,7 +56,7 @@ app.post('/api/upload', async (req, res) => {
         }
         let filename = createImage(req);
 
-        res.send(req.protocol+'://'+req.hostname+'/'+filename)
+        res.send((process.env.ALWAYS_USE_HTTPS == "true" ? "https" : req.protocol)+'://'+req.hostname+'/'+filename)
     })
 })
 app.delete('/api/delete/:filename', upload.none(), async (req, res) => {
